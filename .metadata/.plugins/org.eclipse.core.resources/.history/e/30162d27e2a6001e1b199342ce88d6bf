@@ -1,0 +1,29 @@
+package com.example.cardetails.controller;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.cardetails.model.Car;
+
+@RestController
+@RequestMapping("/cardetails")
+public class CarDetailService {
+	
+	private Car car;
+	
+	@GetMapping("{carname}")
+	public Car getCarDetails(String carname)
+	{
+		return car;
+	}
+	
+	@PostMapping
+	public Car createCarDetails(@RequestBody Car car)
+	{   this.car=car;
+		return car;
+	}
+
+}

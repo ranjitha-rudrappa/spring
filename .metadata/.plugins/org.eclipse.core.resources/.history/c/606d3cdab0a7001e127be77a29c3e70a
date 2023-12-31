@@ -1,0 +1,62 @@
+package com.example.cardetails.controller;
+import com.example.cardetails.model.Car;
+import java.util.List;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.cardetails.service.CarService;
+
+
+@RestController
+@RequestMapping("/cardetails")
+public class CarDetailController {
+	
+	 CarService carService;
+	
+	
+	public CarDetailController(CarService carService) {
+		super();
+		this.carService = carService;
+	}
+
+
+	@GetMapping
+	public List<Car> getCarDetails(String carId)
+	{   
+		return carService.getAllCarDetails();
+	}
+	
+	
+	@GetMapping("{carId}")
+	public Car getCarDetailsById(@PathVariable String carId)
+	{
+		return carService.getCarDetails(carId);
+	}
+	
+	@PostMapping
+	public String createCarDetails(@RequestBody Car car)
+	{   carService.createCarDetails(car);
+		return "Car deatils added";
+	}
+	
+	@PutMapping
+	public String updateCarDetails(@RequestBody Car car)
+	{   carService.updateCarDetails(car);
+		return "car details updated";
+	}
+	
+	@DeleteMapping("{carId}")
+	public String deleteCarDetails(@PathVariable String carId)
+	{   carService.deleteCarDetails(carId);
+		return "Deleted Sucessfully";
+	}
+	
+}

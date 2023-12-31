@@ -1,0 +1,28 @@
+package com.example.cardetails.model;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class CarModel {
+	
+	private String carname;
+	private String cartype;
+	private String carmodel;
+	private String fueltype;
+	
+	public CarModel() {
+		super();
+	}
+
+	public CarModel(String carname, String cartype, String carmodel, String fueltype) {
+		super();
+		this.carname = carname;
+		this.cartype = cartype;
+		this.carmodel = carmodel;
+		this.fueltype = fueltype;
+	}
+	
+
+}

@@ -1,0 +1,122 @@
+/*package com.example.cardetails.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
+import com.example.cardetails.model.Car;
+import com.example.cardetails.repository.CarRepository;
+
+@Service
+public class CarServiceImpl implements CarService {
+	
+	CarRepository carRepository;
+	
+	public CarServiceImpl(CarRepository carRepository) {
+		super();
+		this.carRepository = carRepository;
+	}
+
+	@Override
+	public String createCarDetails(Car car) {
+		carRepository.save(car);
+		return "Success";
+	}
+
+	@Override
+	public String updateCarDetails(Car car) {
+		carRepository.save(car);
+		return "Success";
+	}
+
+	@Override
+	public String deleteCarDetails(String carId) {
+		carRepository.deleteById(carId);
+		return "Success";
+	}
+
+
+	@Override
+	public Car getCarDetails(String carId) {
+	    Optional<Car> optionalCar = carRepository.findById(carId);
+
+	    if (optionalCar.isPresent()) {
+	        return optionalCar.get();
+	    } else {
+	        throw new CarNotFoundException("Car not found with ID: " + carId);
+	    }
+	}
+
+	@Override
+	public List<Car> getAllCarDetails() {
+		return carRepository.findAll();
+	}
+	
+
+}
+*/
+
+package com.example.cardetails.controller;
+
+import com.example.cardetails.model.Car;
+import com.example.cardetails.service.CarService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/cardetails")
+public class CarDetailController {
+
+    private final CarService carService;
+    private static final Logger logger = LoggerFactory.getLogger(CarDetailController.class);
+
+    public CarDetailController(CarService carService) {
+        this.carService = carService;
+    }
+
+    @GetMapping
+    public List<Car> getCarDetails() {
+        logger.info("Request received for retrieving all car details.");
+        List<Car> allCarDetails = carService.getAllCarDetails();
+        logger.info("Returning {} car details.", allCarDetails.size());
+        return allCarDetails;
+    }
+
+    @GetMapping("{carId}")
+    public Car getCarDetailsById(@PathVariable String carId) {
+        logger.info("Request received for retrieving car details by ID: {}", carId);
+        Car carDetails = carService.getCarDetails(carId);
+        if (carDetails != null) {
+            logger.info("Found car details for ID {}: {}", carId, carDetails);
+        } else {
+            logger.warn("No car details found for ID: {}", carId);
+        }
+        return carDetails;
+    }
+
+    @PostMapping
+    public String createCarDetails(@RequestBody Car car) {
+        carService.createCarDetails(car);
+        logger.info("Car details added: {}", car);
+        return "Car details added";
+    }
+
+    @PutMapping
+    public String updateCarDetails(@RequestBody Car car) {
+        carService.updateCarDetails(car);
+        logger.info("Car details updated: {}", car);
+        return "Car details updated";
+    }
+
+    @DeleteMapping("{carId}")
+    public String deleteCarDetails(@PathVariable String carId) {
+        carService.deleteCarDetails(carId);
+        logger.info("Car details deleted for ID: {}", carId);
+        return "Deleted Successfully";
+    }
+}
+

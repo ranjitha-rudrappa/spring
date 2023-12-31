@@ -1,0 +1,113 @@
+openapi: 3.0.0
+info:
+  title: Car Details API
+  version: 1.0.0
+servers:
+  - url: "http://localhost:8084"
+paths:
+  /cardetails:
+    get:
+      summary: Get all car details
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json: {}
+      x-codegen-request-body-name: 
+    post:   # Add the POST method for creating a new car
+      summary: Create a new car
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CarRequest'
+      responses:
+        '201':
+          description: Car created successfully
+        '400':
+          description: Invalid input
+  /cardetails/{carId}:
+    get:
+      summary: Get car details by ID
+      parameters:
+        - in: path
+          name: carId
+          required: true
+          description: ID of the car to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+        '404':
+          description: Car not found
+          content:
+            text/plain:
+              schema:
+                type: string
+      x-codegen-request-body-name: carId
+    put:
+      summary: Update car details by ID
+      parameters:
+        - in: path
+          name: carId
+          required: true
+          description: ID of the car to update
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CarRequest'
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid input
+        '404':
+          description: Car not found
+      x-codegen-request-body-name: 
+    delete:
+      summary: Delete car details by ID
+      parameters:
+        - in: path
+          name: carId
+          required: true
+          description: ID of the car to delete
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+        '404':
+          description: Car not found
+      x-codegen-request-body-name: 
+components:
+  schemas:
+    CarRequest:
+      type: object
+      properties:
+        carname:
+          type: string
+        cartype:
+          type: string
+        carmodel:
+          type: string
+        fueltype:
+          type: string
+
+    Car:
+      allOf:
+        - $ref: '#/components/schemas/CarRequest'
+        - type: object
+          properties:
+            carId:
+              type: string
+              readOnly: true

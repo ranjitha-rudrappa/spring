@@ -1,0 +1,5 @@
+package com.example.cardetails.service;
+
+public class CarNotFoundException extends Exception {
+
+}

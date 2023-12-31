@@ -1,0 +1,5 @@
+package com.example.cardetails.controller;
+
+public class CarDetailService {
+
+}
