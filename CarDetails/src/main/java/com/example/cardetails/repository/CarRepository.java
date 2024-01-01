@@ -1,9 +1,14 @@
 package com.example.cardetails.repository;
 
+
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.example.cardetails.model.Car;
+
+import com.example.cardetails.entity.Car;
 
 public interface CarRepository extends JpaRepository<Car,String>{
+	 Optional<Car> findByCarname(String carname);
 	
 
 }

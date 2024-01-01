@@ -4,7 +4,8 @@ package com.example.cardetails.service;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
-import com.example.cardetails.model.Car;
+
+import com.example.cardetails.entity.Car;
 import com.example.cardetails.repository.CarRepository;
 
 @Service
@@ -51,6 +52,18 @@ public class CarServiceImpl implements CarService {
 	public List<Car> getAllCarDetails() {
 		return carRepository.findAll();
 	}
+	
+	 @Override
+	    public Car getCarDetailsByCarname(String carname) {
+	        Optional<Car> optionalCar = carRepository.findByCarname(carname);
+
+	        if (optionalCar.isPresent()) {
+	            return optionalCar.get();
+	        } else {
+	            throw new CarNotFoundException("Car not found with carname: " + carname);
+	        }
+	    }
+	
 	
 
 }

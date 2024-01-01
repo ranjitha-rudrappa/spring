@@ -1,7 +1,7 @@
 package com.example.cardetails.service;
 import java.util.List;
 
-import com.example.cardetails.model.Car;
+import com.example.cardetails.entity.Car;
 
 public interface CarService {
 	
@@ -10,4 +10,6 @@ public interface CarService {
 	public String deleteCarDetails(String carId);
 	public Car getCarDetails(String carId);
 	public List<Car> getAllCarDetails();
-}
+	public Car getCarDetailsByCarname(String carname);
+	}
+
